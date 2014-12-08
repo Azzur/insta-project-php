@@ -1,0 +1,43 @@
+index_location:
+    path:     /
+    defaults: { _controller: PlanningBundle:Location:index }
+
+site_list:
+    path:     /sites
+    defaults: { _controller: PlanningBundle:Location:siteList }
+
+room_list:
+    path:     /rooms
+    defaults: { _controller: PlanningBundle:Location:roomList }
+
+site:
+    path:     /site-{id}
+    defaults: { _controller: PlanningBundle:Location:site }
+
+room:
+    path:     /room-{id}
+    defaults: { _controller: PlanningBundle:Location:room }
+
+add_site:
+    path:     /site/new
+    defaults: { _controller: PlanningBundle:Location:addSite }
+
+add_room:
+    path:     /room/new
+    defaults: { _controller: PlanningBundle:Location:addRoom }
+
+edit_site:
+    path:     /site-{id}/edit
+    defaults: { _controller: PlanningBundle:Location:editSite }
+
+edit_room:
+    path:     /room-{id}/edit
+    defaults: { _controller: PlanningBundle:Location:editRoom }
+    
+delete_room:
+    path:     /room-{id}/delete
+    defaults: { _controller: PlanningBundle:Location:deleteRoom }
+    
+delete_site:
+    path:     /site-{id}/delete
+    defaults: { _controller: PlanningBundle:Location:deleteSite }

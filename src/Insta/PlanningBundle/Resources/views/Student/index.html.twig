@@ -1,0 +1,62 @@
+{% extends 'PlanningBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="col-lg-7">
+        <fieldset>
+            <legend>Liste des etudiants <small class="pull-right"><a class="btn btn-default btn-xs" href="{{ path('add_student') }}">Ajouter un étudiant</a></small></legend>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Promotion</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for student in students %}
+                    <tr>
+                        <td>{{ student.firstname ~ " " ~ student.lastname|upper}}</td>
+                        <td>{{ student.promotion.name|default("<i>Pas de promotion</i>")|raw }}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <a class="btn btn-default btn-xs" href="{{ path("show_student",{id : student.usernameCanonical}) }}">Afficher</a>
+                                <a class="btn btn-info btn-xs" href="{{ path("edit_student",{id : student.usernameCanonical}) }}">Editer</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+    <div class="col-lg-5">
+        <fieldset>
+            <legend>Liste des promotions <small class="pull-right"><a class="btn btn-xs btn-default" href="{{ path("add_promo") }}">Ajouter une promotion</a></small></legend>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Date</th>
+                    <th>Etudiants</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for promo in promos %}
+                    <tr>
+                        <td>{{ promo.name }}</td>
+                        <td>{{ promo.dateStart|date('Y') ~ " - " ~ promo.dateEnd|date('Y') }}</td>
+                        <td>{{ promo.students|length }}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <a class="btn btn-default btn-xs" href="{{ path("show_promo",{id : promo.id}) }}">Afficher</a>
+                                <a class="btn btn-info btn-xs" href="{{ path("edit_promo",{id : promo.id}) }}">Editer</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+{% endblock %}

@@ -33,6 +33,7 @@ class Teacher extends User
      */
     public function __construct()
     {
+        parent::__construct();
         $this->courses = new ArrayCollection();
         $this->groups = new ArrayCollection();
     }
@@ -112,5 +113,61 @@ class Teacher extends User
     public function getGroups()
     {
         return $this->groups;
+    }
+    /**
+     * @var string
+     */
+    protected $firstname;
+
+    /**
+     * @var string
+     */
+    protected $lastname;
+
+
+    /**
+     * Set firstname
+     *
+     * @param string $firstname
+     * @return Teacher
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * Get firstname
+     *
+     * @return string 
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Set lastname
+     *
+     * @param string $lastname
+     * @return Teacher
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * Get lastname
+     *
+     * @return string 
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
     }
 }

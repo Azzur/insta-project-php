@@ -1,0 +1,53 @@
+{% extends "PlanningBundle::layout.html.twig" %}
+
+{% block title %}Affichage d'une promotion{% endblock %}
+
+{% block jumbotron %}
+    <div class="jumbotron">
+        <div class="container">
+            <h1>{{ promo.name }} <small class="pull-right" ><a class="btn btn-primary btn-xs" href="{{ path('edit_promo', {id : promo.id}) }}">Modifier</a></small></h1>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <dl class="dl-horizontal">
+        <dt>Nombre d'éléve(s) :</dt>
+        <dd>{{ promo.students|length }}</dd>
+    </dl>
+    <fieldset>
+        <legend>Liste des etudiants de la promotion {{ promo.name }}</legend>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Ordinateur</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for student in promo.students %}
+                <tr>
+                    <td>{{ student.firstname ~ " " ~ student.lastname|upper}}</td>
+                    {% if student.hasComputer %}
+                        <td>Oui</td>
+                    {% else %}
+                        <td>Non</td>
+                    {% endif %}
+                        {% if student.hasComputer %}
+                            <td>Oui</td>
+                        {% else %}
+                            <td>Non</td>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <a class="btn btn-warning btn-xs" href="{{ path("delete_student",{id : student.usernameCanonical,promoid: student.promotion.id}) }}">Supprimer</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </fieldset>
+{% endblock %}

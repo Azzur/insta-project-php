@@ -1,0 +1,43 @@
+{% extends 'PlanningBundle::layout.html.twig' %}
+
+{% block content %}
+    <h2>Liste des utilisateurs <small class="pull-right"><a href="{{ path('group_add_user', {group:group.nameCanonical}) }}" class="btn btn-info btn-xs">Ajouter un utilisateur</a></small></h2>
+    <table class="table table-condensed">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in group.users %}
+
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.fullname }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                <div class="btn-group" role="group" aria-label="...">
+                    <a class="btn btn-default btn-xs" href="{{ path('group_remove_user', {group:group.nameCanonical, user:user.usernameCanonical}) }}">Retirer du groupe</a>
+                </div>
+            </td>
+        </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+{% block jumbotron %}
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Groupe : {{ group.name }} <small class="pull-right"><a class="btn btn-info" href="{{ path('group_edit', {group:group.nameCanonical}) }}">Editer</a></small></h1>
+        </div>
+    </div>
+
+{% endblock %}
+

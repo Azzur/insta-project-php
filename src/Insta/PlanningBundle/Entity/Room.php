@@ -36,6 +36,13 @@ class Room
      */
     protected $name;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="computer_nb", type="integer")
+     */
+    protected $freeComputer;
+
 
     /**
      * Get id
@@ -91,5 +98,28 @@ class Room
     public function getSite()
     {
         return $this->site;
+    }
+
+    /**
+     * Set freeComputer
+     *
+     * @param integer $freeComputer
+     * @return Room
+     */
+    public function setFreeComputer($freeComputer)
+    {
+        $this->freeComputer = $freeComputer;
+
+        return $this;
+    }
+
+    /**
+     * Get freeComputer
+     *
+     * @return integer 
+     */
+    public function getFreeComputer()
+    {
+        return $this->freeComputer;
     }
 }

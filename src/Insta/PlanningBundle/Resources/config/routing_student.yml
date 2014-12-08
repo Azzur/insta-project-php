@@ -1,0 +1,32 @@
+student_promo_list:
+    path:     /
+    defaults: { _controller: PlanningBundle:Student:index }
+
+add_student:
+    path:  /student/new
+    defaults : { _controller: PlanningBundle:Student:addStudent }
+
+show_student:
+    path: /student/{id}
+    defaults: {_controller: PlanningBundle:Student:showStudent}
+
+edit_student:
+    path: /student/{id}/edit
+    defaults : {_controller: PlanningBundle:Student:editStudent}
+
+delete_student:
+    path: /promo/{promoid}/remove/{id}
+    defaults : {_controller: PlanningBundle:Student:removeStudentFromPromo}
+
+add_promo:
+    path: /promo/new
+    defaults : {_controller: PlanningBundle:Student:addPromo}
+
+edit_promo:
+    path: /promo/{id}/edit
+    defaults : {_controller: PlanningBundle:Student:editPromo}
+
+show_promo:
+    path: /promo/{id}
+    defaults : {_controller: PlanningBundle:Student:showPromo}
+

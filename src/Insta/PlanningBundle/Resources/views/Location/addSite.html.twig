@@ -1,0 +1,13 @@
+{% extends "PlanningBundle::layout.html.twig" %}
+
+{% block title %}PlanningBundle:Location:addSite{% endblock %}
+
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block content %}
+
+    <h1>Ajout d'un site</h1>
+
+    {{ form(form) }}
+
+{% endblock %}

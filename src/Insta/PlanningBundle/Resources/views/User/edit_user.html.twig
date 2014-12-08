@@ -1,0 +1,18 @@
+{% extends 'PlanningBundle::layout.html.twig' %}
+
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block content %}
+
+    {{ form(form) }}
+
+{% endblock %}
+
+{% block jumbotron %}
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Utilisateur : {{ user.username }} <small class="pull-right"><a class="btn btn-info" href="">Editer</a></small></h1>
+        </div>
+    </div>
+{% endblock %}
+

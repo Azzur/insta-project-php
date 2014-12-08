@@ -1,0 +1,26 @@
+{% extends "PlanningBundle::layout.html.twig" %}
+
+{% block title %}Gestion des localisations (sites et salles){% endblock %}
+
+{% block jumbotron %}
+    <div class="jumbotron">
+        <div class="container">
+            <h1>{{ sites|length }} site(s) et {{ rooms|length }} salle(s)</h1>
+            <dl class="dl-horizontal">
+                {% for site in sites %}
+                <dt>{{ site.name }}</dt>
+                <dd>{{ site.rooms|length }} salle(s)</dd>
+                {% endfor %}
+            </dl>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <ul>
+        <li><a href="{{ path('site_list') }}">Liste des sites</a></li>
+        <li><a href="{{ path('room_list') }}">Liste des salles</a></li>
+    </ul>
+
+{% endblock %}

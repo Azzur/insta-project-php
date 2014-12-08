@@ -1,0 +1,25 @@
+{% extends "PlanningBundle::layout.html.twig" %}
+
+{% block title %}Affichage d'un étudiant{% endblock %}
+
+{% block jumbotron %}
+    <div class="jumbotron">
+        <div class="container">
+            <h1>{{ student.firstname ~ " " ~ student.lastname|upper() }}</h1>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <dl class="dl-horizontal col-lg-5">
+        <dt>Promotion</dt>
+        <dd>{{ student.promotion.name|default("<i>Pas de promotion</i>")|raw }}</dd>
+        <dt>Dispose d'un ordinateur </dt>
+        {% if student.hasComputer %}
+            <dd>Oui</dd>
+        {% else %}
+            <dd>Non</dd>
+        {% endif %}
+        <dd><a class="btn btn-primary btn-xs" href="{{ path('edit_student', {id : student.usernameCanonical}) }}">Modifier</a></dd>
+    </dl>
+{% endblock %}

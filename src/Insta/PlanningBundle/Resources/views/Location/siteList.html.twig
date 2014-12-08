@@ -1,0 +1,40 @@
+{% extends "PlanningBundle::layout.html.twig" %}
+
+{% block title %} Liste des sites {% endblock %}
+
+{% block content %}
+    <h1>Liste des sites <small> <a class="btn btn-primary" href="{{ path("add_site")  }}">Ajouter un site</a></small></h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th>Téléphone</th>
+                <th>Ligne de métro</th>
+                <th>Nombre de salles</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for site in sites %}
+            <tr>
+                <th>{{ site.id }}</th>
+                <td>{{ site.name }}</td>
+                <td>{{ site.street ~ " - " ~ site.zipcode ~ " "~ site.city}}</td>
+                <td><a href="tel:{{ site.phoneNumber }}">{{ site.phoneNumber }}</a></td>
+                <td>{% for line, link in site.subwayLines %}<img src="{{ link }}" alt="{{ line }}"> {% endfor %}</td>
+                <td>{{ site.rooms|length }}</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="...">
+                        <a class="btn btn-primary btn-xs" href="{{ path("site",{id:site.id})  }}">Afficher</a>
+                        <a class="btn btn-info btn-xs" href="{{ path("edit_site",{id:site.id})  }}">Editer</a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'PlanningBundle::layout.html.twig' %}
+
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block content %}
+
+    <h1>Voulez-vous retirer {{ user.fullname }} du groupe {{ group.name }} ?</h1>
+
+    {{ form(form) }}
+
+{% endblock %}
+
+{% block jumbotron %}
+
+{% endblock %}
+

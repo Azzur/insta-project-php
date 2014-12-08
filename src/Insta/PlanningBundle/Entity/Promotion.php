@@ -177,4 +177,37 @@ class Promotion
     {
         return $this->lessons;
     }
+
+    /**
+     * Add students
+     *
+     * @param \Insta\PlanningBundle\Entity\Student $students
+     * @return Promotion
+     */
+    public function addStudent(\Insta\PlanningBundle\Entity\Student $students)
+    {
+        $this->students[] = $students;
+
+        return $this;
+    }
+
+    /**
+     * Remove students
+     *
+     * @param \Insta\PlanningBundle\Entity\Student $students
+     */
+    public function removeStudent(\Insta\PlanningBundle\Entity\Student $students)
+    {
+        $this->students->removeElement($students);
+    }
+
+    /**
+     * Get students
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStudents()
+    {
+        return $this->students;
+    }
 }

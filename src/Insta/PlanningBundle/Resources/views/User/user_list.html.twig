@@ -1,0 +1,49 @@
+{% extends 'PlanningBundle::layout.html.twig' %}
+
+{% block content %}
+
+    <fieldset>
+        <legend>Liste des utilisateurs <small class="pull-right"><a href="{{ path('user_add') }}" class="btn btn-xs btn-default">Ajouter un utilisateur</a></small></legend>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Identifiant</th>
+                <th>Email</th>
+                <th>Groupes</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr {% if user.locked %}class="bg-warning"{% else %}class="bg-success"{% endif %}>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.groupNames|join }}</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <a class="btn btn-default btn-xs" href="{{ path('user_show', {user:user.usernameCanonical}) }}">Afficher</a>
+                            <a class="btn btn-info btn-xs" href="{{ path('user_edit', {user:user.usernameCanonical}) }}">Editer</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <nav>
+            <ul class="pagination">
+                {% for i in range(0, nbPages) %}
+                <li {% if i == offset %}class="active"{% endif %}><a href="{{ path('user_list', {offset: i}) }}">{% if i != 0 and i != offset %}{{ i }}{% elseif i == 0  %}&laquo;{% elseif i == offset %}&raquo;{% endif %}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
+
+
+    </fieldset>
+
+{% endblock %}
+
+{% block jumbotron %}
+
+{% endblock %}
+
