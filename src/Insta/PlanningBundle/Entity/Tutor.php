@@ -48,7 +48,6 @@ class Tutor extends User
      */
     public function __construct()
     {
-        parent::__construct();
         $this->students = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -83,61 +82,5 @@ class Tutor extends User
     public function getStudents()
     {
         return $this->students;
-    }
-    /**
-     * @var string
-     */
-    protected $firstname;
-
-    /**
-     * @var string
-     */
-    protected $lastname;
-
-
-    /**
-     * Set firstname
-     *
-     * @param string $firstname
-     * @return Tutor
-     */
-    public function setFirstname($firstname)
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    /**
-     * Get firstname
-     *
-     * @return string 
-     */
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
-
-    /**
-     * Set lastname
-     *
-     * @param string $lastname
-     * @return Tutor
-     */
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    /**
-     * Get lastname
-     *
-     * @return string 
-     */
-    public function getLastname()
-    {
-        return $this->lastname;
     }
 }

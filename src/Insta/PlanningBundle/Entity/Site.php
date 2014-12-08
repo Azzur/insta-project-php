@@ -61,7 +61,7 @@ class Site
     /**
      * @var string
      *
-     * @ORM\Column(name="phoneNumber", type="string", length=12)
+     * @ORM\Column(name="phoneNumber", type="string", length=255)
      */
     protected $phoneNumber;
 

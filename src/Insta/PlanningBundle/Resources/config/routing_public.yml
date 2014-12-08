@@ -1,4 +1,0 @@
-planning_homepage:
-    path:     /
-    defaults: { _controller: PlanningBundle:Public:index }
-
