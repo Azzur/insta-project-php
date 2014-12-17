@@ -5,7 +5,10 @@
 {% block jumbotron %}
     <div class="jumbotron">
         <div class="container">
-            <h1>{{ promo.name }} <small class="pull-right" ><a class="btn btn-primary btn-xs" href="{{ path('edit_promo', {id : promo.id}) }}">Modifier</a></small></h1>
+            <h1>Promo {{ promo.name }}
+                <small class="pull-right" ><a class="btn btn-primary btn-xs" href="{{ path('edit_promo', {id : promo.id}) }}">Modifier</a></small>
+            </h1>
+            <h3>{{ promo.grade.name|default('<i>Pas de formation assignée</i>')|raw }}</h3>
         </div>
     </div>
 {% endblock %}

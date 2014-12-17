@@ -1,35 +1,27 @@
 {% extends 'PlanningBundle:Student:_layout_student.html.twig' %}
 
 {% block main %}
-    <div class="col-lg-6">
-        <fieldset>
-            <legend>Liste des etudiants <small class="pull-right"><a class="btn btn-default btn-xs" href="{{ path('add_student') }}">Ajouter un étudiant</a></small></legend>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Promotion</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for student in students %}
-                    <tr>
-                        <td>{{ student.firstname ~ " " ~ student.lastname|upper}}</td>
-                        <td>{{ student.promotion.name|default("<i>Pas de promotion</i>")|raw }}</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="...">
-                                <a class="btn btn-default btn-xs" href="{{ path("show_student",{id : student.usernameCanonical}) }}">Afficher</a>
-                                <a class="btn btn-info btn-xs" href="{{ path("edit_student",{id : student.usernameCanonical}) }}">Editer</a>
-                            </div>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </fieldset>
-    </div>
-    <div class="col-lg-6">
+    <div class="col-xs-12">
+        <dl class="dl-horizontal">
+            <dt>Répartition</dt>
+            <dd>{{ students|length }} élève(s) dans {{ promos|length }} promotion(s)</dd>
+
+            {% for promo in promos %}
+                <dt>{{ 'Promo ' ~ promo.name }} </dt>
+                <dd>{{ promo.grade.name|default('') }}  </dd>
+                <dt><div class="btn-group" role="group" aria-label="...">
+                        <a class="btn btn-default btn-xs" href="{{ path("show_promo",{id : promo.id}) }}">Afficher</a>
+                        <a class="btn btn-info btn-xs" href="{{ path("edit_promo",{id : promo.id}) }}">Editer</a>
+                    </div></dt>
+                <dd>
+                    {{ promo.dateStart|date('Y') ~ " - " ~ promo.dateEnd|date('Y') }}
+                </dd>
+            {% endfor %}
+
+        </dl>
+
+
+
         <fieldset>
             <legend>Liste des promotions <small class="pull-right"><a class="btn btn-xs btn-default" href="{{ path("add_promo") }}">Ajouter une promotion</a></small></legend>
             <table class="table">

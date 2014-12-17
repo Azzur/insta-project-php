@@ -12,13 +12,13 @@ use Doctrine\ORM\EntityManager;
 use Insta\PlanningBundle\Entity\Course;
 use Insta\PlanningBundle\Entity\Lesson;
 use Insta\PlanningBundle\Entity\Oral;
+use Insta\PlanningBundle\Entity\Teacher;
 use Insta\PlanningBundle\Form\CourseType;
 use Insta\PlanningBundle\Form\LessonType;
 use Insta\PlanningBundle\Form\OralType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
-
 class ScheduleController extends Controller {
 
     function createLessonAction(Request $request) {
@@ -28,11 +28,23 @@ class ScheduleController extends Controller {
 
         $lesson = new Lesson();
         $form = $this->createForm(new LessonType(), $lesson);
+        $defaultDate = new \DateTime('2001-01-01');
+        $defaultDate -> setTime(0,01,0);
+        $form->get('duration')->setData($defaultDate);
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-
+            // Convert to hours to minute
+            $t = explode(":", $form->get('duration')->getData()->format('H:i'));
+            $h = $t[0];
+            if (isset($t[1])) {
+                $m = $t[1];
+            } else {
+                $m = "00";
+            }
+            $mm = ($h * 60) +  $m;
+            $lesson->setDuration($mm);
             if ($scheduleRepo->isRoomUsed($lesson)) {
 
                 $freeRooms = $scheduleRepo->getEmptyRooms($lesson);
@@ -55,6 +67,19 @@ class ScheduleController extends Controller {
             if (!$lesson->getPromotion()->isFreeFor($lesson)) {
                 $form->get('promotion')->addError(new FormError('La promotion participe déjà à un autre évènement.'));
             }
+
+            $teacherFree = false;
+            foreach ($lesson->getCourse()->getTeachers() as $teacher) {
+                /** @var Teacher $teacher */
+                if ($teacher->isFreeFor($lesson)) {
+                    $teacherFree = true;
+                }
+            }
+
+            if (!$teacherFree) {
+                $form->get('course')->addError(new FormError('Le professeur participe déjà à un autre évènement.'));
+            }
+
             /** @var Lesson[] $toPersist */
             $toPersist = array();
 
@@ -84,6 +109,7 @@ class ScheduleController extends Controller {
             }
 
 
+
             if ($form->getErrors(true)->count() == 0) {
                 foreach($toPersist as $entity) {
                     $em->persist($entity);
@@ -109,11 +135,23 @@ class ScheduleController extends Controller {
 
         $oral = new Oral();
         $form = $this->createForm(new OralType(), $oral);
+        $defaultDate = new \DateTime('2001-01-01');
+        $defaultDate -> setTime(0,01,0);
+        $form->get('duration')->setData($defaultDate);
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-
+            // Convert to hours to minute
+            $t = explode(":", $form->get('duration')->getData()->format('H:i'));
+            $h = $t[0];
+            if (isset($t[1])) {
+                $m = $t[1];
+            } else {
+                $m = "00";
+            }
+            $mm = ($h * 60) +  $m;
+            $oral->setDuration($mm);
             if ($scheduleRepo->isRoomUsed($oral)) {
 
                 $freeRooms = $scheduleRepo->getEmptyRooms($oral);
@@ -133,6 +171,18 @@ class ScheduleController extends Controller {
                 $form->get('room')->addError(new FormError('La salle est déjà utilisée pour ce créneau. ' .$strInfo));
             }
 
+            $teacherFree = false;
+            foreach ($oral->getCourse()->getTeachers() as $teacher) {
+                /** @var Teacher $teacher */
+                if ($teacher->isFreeFor($oral)) {
+                    $teacherFree = true;
+                }
+            }
+
+            if (!$teacherFree) {
+                $form->get('course')->addError(new FormError('Le professeur participe déjà à un autre évènement.'));
+            }
+
             foreach ($oral->getStudents() as $student) {
 
                 if (is_null($student->getPromotion())) {
@@ -150,8 +200,6 @@ class ScheduleController extends Controller {
 
                 return $this->redirectToRoute('show_schedule', array('id'=>$oral->getId()));
             }
-
-
 
         }
 

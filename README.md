@@ -66,7 +66,8 @@ Travail demandé :
 - Planification
 - Livrables
     - [Conception générale](/Specifications.md)
-    - [Spécification fonctionnelle](/Features.md)
-    - [Conception détaillée](/Technicals.md)
+    - [Spécifications fonctionnelles](/Features.md)
+    - [Spécifications techniques](/Technicals.md)
+    - [Manuel d'installation](/Installation.md)
 - Tests
 - Mise en ligne

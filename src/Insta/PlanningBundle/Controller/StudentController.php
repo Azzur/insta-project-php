@@ -9,8 +9,10 @@
 namespace Insta\PlanningBundle\Controller;
 
 
+use Insta\PlanningBundle\Entity\Grade;
 use Insta\PlanningBundle\Entity\Promotion;
 use Insta\PlanningBundle\Entity\Student;
+use Insta\PlanningBundle\Form\GradeType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -40,6 +42,12 @@ class StudentController extends Controller {
         $newPromo = new Promotion();
         $form = $this->createFormBuilder($newPromo)
             ->add('name', 'text',array('label' => 'promo.name'))
+            ->add('grade', 'entity', array(
+                'class' => 'Insta\PlanningBundle\Entity\Grade',
+                'property' => 'name',
+                'required'=>false,
+                'label' => 'course.grade'
+            ))
             ->add('dateStart', 'date',array('label' => 'promo.dateStart'))
             ->add('dateEnd', 'date',array('label' => 'promo.dateEnd'))
             ->add('form.add', 'submit')
@@ -77,6 +85,12 @@ class StudentController extends Controller {
                 'property' => 'name',
                 'label' => 'student.promotion'
             ))
+            ->add('grade', 'entity', array(
+                'class' => 'Insta\PlanningBundle\Entity\Grade',
+                'property' => 'name',
+                'required'=>false,
+                'label' => 'course.grade'
+            ))
             ->add('form.edit', 'submit')
             ->getForm();
 
@@ -105,23 +119,17 @@ class StudentController extends Controller {
         ));
     }
 
-    function userListAction($offset) {
-        $repo = $this->getDoctrine()->getRepository('PlanningBundle:User');
-        $nbPage = (int) floor(count($repo->findAll()) /20);
-        $users = $repo->findBy(array(),null, 20, $offset * 20);
-        return $this->render('PlanningBundle:User:user_list.html.twig', array(
-            'users'=>$users,
-            'nbPages' => $nbPage,
-            'offset' => $offset
-        ));
-    }
-
-
     public function editPromoAction(Request $request, Promotion $id)
     {
         $em = $this->getDoctrine()->getManager();
         $form = $this->createFormBuilder($id)
             ->add('name', 'text',array('label' => 'promo.name'))
+            ->add('grade', 'entity', array(
+                'class' => 'Insta\PlanningBundle\Entity\Grade',
+                'property' => 'name',
+                'required'=>false,
+                'label' => 'course.grade'
+            ))
             ->add('dateStart', 'date',array('label' => 'promo.dateStart'))
             ->add('dateEnd', 'date',array('label' => 'promo.dateEnd'))
             ->add('form.edit', 'submit')
@@ -173,5 +181,65 @@ class StudentController extends Controller {
         return $this->render('PlanningBundle:Student:showPromo.html.twig', array(
             'promo'=>$promo
         ));
+    }
+
+    public function listGradeAction() {
+
+        $em = $this->getDoctrine()->getManager();
+        $grades = $em->getRepository('PlanningBundle:Grade')->findAll();
+
+        return $this->render('PlanningBundle:Student:listGrades.html.twig', array(
+            'grades' => $grades
+        ));
+
+    }
+
+    public function editGradeAction(Request $request, $id) {
+
+        $em = $this->getDoctrine()->getManager();
+        $grade = $em->getRepository('PlanningBundle:Grade')->find($id);
+
+        if (is_null($grade)) {
+            return $this->createNotFoundException('Formation non trouvée.');
+        }
+
+        $form = $this->createForm(new GradeType(), $grade)
+            ->add('edit', 'submit', array('label'=>'form.edit'));
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em->flush();
+            return $this->redirectToRoute('list_grade');
+        }
+
+        return $this->render('PlanningBundle:Student:editGrades.html.twig', array(
+            'form' => $form->createView()
+        ));
+
+    }
+
+
+
+    public function addGradeAction(Request $request) {
+
+        $em = $this->getDoctrine()->getManager();
+        $grade = new Grade();
+
+        $form = $this->createForm(new GradeType(), $grade)
+            ->add('add', 'submit', array('label'=>'form.add'));
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em->persist($grade);
+            $em->flush();
+            return $this->redirectToRoute('list_grade');
+        }
+
+        return $this->render('PlanningBundle:Student:editGrades.html.twig', array(
+            'form' => $form->createView()
+        ));
+
     }
 } 

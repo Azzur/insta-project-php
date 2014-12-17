@@ -185,7 +185,6 @@ class TeacherController extends Controller
             ->add('name','text',array('label' => 'course.name'))
             ->add('description','textarea',array('label' => 'course.description'))
             ->add('descriptionLink', 'url', array('required'=>false,'label' => 'course.descriptionLink'))
-            //->add('variousLinks', 'choice', array('required'=>false))
             ->add('teachers','entity', array(
                 'class' => 'Insta\PlanningBundle\Entity\Teacher',
                 'property' => 'fullname',
@@ -213,7 +212,8 @@ class TeacherController extends Controller
         return $this->render('PlanningBundle:Teacher:editCourse.html.twig', array(
             'form'=>$form->createView(),
             'course'=>$course
-        ));    }
+        ));
+    }
 
 
 }

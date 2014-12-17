@@ -2,7 +2,40 @@
 
 {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/planning/bootstrap/css/bootstrap-datetimepicker.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/planning/bootstrap/css/bootstrap-timepicker.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/planning/font-awesome/css/font-awesome.css') }}" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/planning/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/planning/js/bootstrap-datetimepicker.fr.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/planning/js/bootstrap-timepicker.min.js') }}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.form_datetime').datetimepicker({
+                language:  'fr',
+                format: "yyyy-mm-dd hh:ii"
+                //format: 'yyyy-mm-dd H:m'
+            });
+            $('.bootstrap-timepicker').timepicker({
+                minuteStep: 5,
+                showInputs: false,
+                showMeridian: false,
+                defaultTime: '0:00'
+            });
+        });
+    </script>
+
+
+{% endblock %}
+
 {% block content %}
+
 
     {{ form(form) }}
 

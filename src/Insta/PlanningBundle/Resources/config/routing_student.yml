@@ -36,3 +36,14 @@ show_promo:
     path: /promo/{id}
     defaults : {_controller: PlanningBundle:Student:showPromo}
 
+add_grade:
+   path:       /grade/new
+   defaults: { _controller: PlanningBundle:Student:addGrade }
+
+list_grade:
+   path:       /grades
+   defaults: { _controller: PlanningBundle:Student:listGrade }
+
+edit_grade:
+   path:        /grade/{id}/edit
+   defaults: { _controller: PlanningBundle:Student:editGrade }

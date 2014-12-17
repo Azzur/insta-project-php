@@ -8,8 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Promotion
  *
- * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Table
+ * @ORM\Entity(repositoryClass="PromotionRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Promotion
@@ -22,6 +22,12 @@ class Promotion
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @var Grade
+     * @ORM\ManyToOne(targetEntity="Grade")
+     */
+    protected $grade;
 
     /**
      * @var string
@@ -46,9 +52,9 @@ class Promotion
     protected $students;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="integer", unique=true)
      */
     protected $name;
 
@@ -305,5 +311,28 @@ class Promotion
 
         return true;
 
+    }
+
+    /**
+     * Set grade
+     *
+     * @param Grade $grade
+     * @return Promotion
+     */
+    public function setGrade(Grade $grade = null)
+    {
+        $this->grade = $grade;
+
+        return $this;
+    }
+
+    /**
+     * Get grade
+     *
+     * @return Grade
+     */
+    public function getGrade()
+    {
+        return $this->grade;
     }
 }

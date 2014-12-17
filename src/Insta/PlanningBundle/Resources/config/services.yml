@@ -1,3 +1,7 @@
 services:
     planning.holidays:
         class: Insta\PlanningBundle\Services\Holidays
+
+    planning.users:
+        class: Insta\PlanningBundle\Services\PlanningUser
+        arguments: [ @doctrine ]

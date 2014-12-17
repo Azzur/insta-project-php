@@ -15,6 +15,8 @@
                     ><a href="{{ path('student_promo_list') }}">Gestion des élèves</a></li>
             <li {% if 'promo' in route %}class="active"{% endif %}
                     ><a href="{{ path('student_promo_list') }}">Gestion des promos</a></li>
+            <li {% if 'grade' in route %}class="active"{% endif %}
+                    ><a href="{{ path('list_grade') }}">Gestion des formation</a></li>
         </ul>
 
     </div>

@@ -198,4 +198,25 @@ class Teacher extends User
         }
         return $names;
     }
+
+    public function isFreeFor(Schedule $inputSchedule) {
+
+        /** @var Schedule[] $schedules */
+        $schedules = array();
+        foreach ($this->courses as $course) {
+            /** @var Course $course */
+            $schedules = array_merge($schedules, $course->getOrals()->toArray());
+            $schedules = array_merge($schedules, $course->getLessons()->toArray());
+        }
+
+        foreach ($schedules as $schedule) {
+            if ( $schedule->getEndDatetime() > $inputSchedule->getDatetime() &&
+                $schedule->getDatetime() < $inputSchedule->getEndDatetime() ) {
+                return false;
+            }
+        }
+
+        return true;
+
+    }
 }
